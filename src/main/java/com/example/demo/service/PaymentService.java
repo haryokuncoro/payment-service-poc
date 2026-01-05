@@ -52,6 +52,9 @@ public class PaymentService {
                     .ifPresent(p -> { throw new IllegalStateException("Already paid"); });
 
             // 4. Optimistic locking
+            // it's not happening during find, but on update.
+            // hibernate check version column at save
+            // prevent update if data already changed
             Wallet wallet = walletRepo.findById(userId).orElseThrow();
 
             if (wallet.getBalance() < amount) {
@@ -67,7 +70,9 @@ public class PaymentService {
             payment.setStatus("SUCCESS");
 
             Payment saved = paymentRepo.save(payment);
-
+            // set 10 minutes to handle
+            // retry timeout, network error, click send twice
+            // idempotency = first layer, db = last layer
             redis.opsForValue().set(idemRedisKey, "DONE", Duration.ofMinutes(10));
 
             return saved;
