@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Payment;
 import com.example.demo.service.PaymentService;
+import com.example.demo.service.PaymentServiceV2;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class PaymentController {
 
     private final PaymentService service;
+    private final PaymentServiceV2 serviceV2;
 
-    public PaymentController(PaymentService service) {
+    public PaymentController(PaymentService service, PaymentServiceV2 serviceV2) {
         this.service = service;
+        this.serviceV2 = serviceV2;
     }
 
     @PostMapping
@@ -25,6 +28,6 @@ public class PaymentController {
             @RequestParam String orderId,
             @RequestParam Long amount
     ) {
-        return service.pay(userId, orderId, amount, key);
+        return serviceV2.pay(userId, orderId, amount, key);
     }
 }

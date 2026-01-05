@@ -1,9 +1,11 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
 @Table(name = "wallets")
+@Data
 public class Wallet {
 
     @Id
@@ -13,16 +15,4 @@ public class Wallet {
 
     @Version
     private Long version;
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public Long getBalance() {
-        return balance;
-    }
-
-    public void setBalance(Long balance) {
-        this.balance = balance;
-    }
 }

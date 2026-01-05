@@ -1,12 +1,13 @@
 package com.example.demo.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
 @Table(
         name = "payments",
         uniqueConstraints = @UniqueConstraint(columnNames = "order_id")
-)
+) @Data
 public class Payment {
 
     @Id
@@ -16,16 +17,4 @@ public class Payment {
     private String orderId;
     private Long amount;
     private String status;
-
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
-    }
-
-    public void setAmount(Long amount) {
-        this.amount = amount;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 }
