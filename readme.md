@@ -55,10 +55,10 @@ UPDATE wallets SET balance = 20000 WHERE user_id = 1;
 - Now try two payments at once each charging 15000.
 
 ```
-curl -X POST "http://localhost:8080/payments?userId=1&orderId=ORD-104&amount=30000" \
+curl -X POST "http://localhost:8080/payments?userId=1&orderId=ORD-104&amount=15000" \
 -H "Idempotency-Key: key-E" &
 
-curl -X POST "http://localhost:8080/payments?userId=1&orderId=ORD-105&amount=30000" \
+curl -X POST "http://localhost:8080/payments?userId=1&orderId=ORD-105&amount=15000" \
 -H "Idempotency-Key: key-F" &
 
 ```
