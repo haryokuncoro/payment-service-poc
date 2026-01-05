@@ -31,7 +31,7 @@ curl -X POST "http://localhost:8080/payments?userId=1&orderId=ORD-1&amount=10000
 - No second payment
 
 ## Concurrency Test
-Terminal 1
+Terminal 
 ```
 curl -X POST "http://localhost:8080/payments?userId=1&orderId=ORD-101&amount=30000" \
   -H "Idempotency-Key: key-A" &
@@ -53,6 +53,15 @@ curl -X POST "http://localhost:8080/payments?userId=1&orderId=ORD-101&amount=300
 UPDATE wallets SET balance = 20000 WHERE user_id = 1;
 ```
 - Now try two payments at once each charging 15000.
+
+```
+curl -X POST "http://localhost:8080/payments?userId=1&orderId=ORD-104&amount=30000" \
+-H "Idempotency-Key: key-E" &
+
+curl -X POST "http://localhost:8080/payments?userId=1&orderId=ORD-105&amount=30000" \
+-H "Idempotency-Key: key-F" &
+
+```
 ### Expected:
 - One succeeds
 - One fails (optimistic lock or insufficient balance)
